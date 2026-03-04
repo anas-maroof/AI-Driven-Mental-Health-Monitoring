@@ -67,6 +67,15 @@ python -m ipykernel install --user --name=<envname>
 
 # NOTEBOOK OVERVIEW
 
+## Raw Text Exploratory Data Analysis (EDA)
+- Load the dataset and inspect its structure (shape, columns, data types)
+- Check for missing values in text and label columns
+- Identify duplicate records in the dataset
+- Analyze class distribution and calculate percentage imbalance
+- Compute text length and word count statistics on raw text
+- Visualize label distribution for imbalance detection
+- Display sample raw texts for manual inspection
+
 ## NLP Resource Initialization & Setup
 - Initialize placeholders for spaCy model, stopwords, and lemmatizer
 - Download required NLTK resources (WordNet, Stopwords, Punkt)

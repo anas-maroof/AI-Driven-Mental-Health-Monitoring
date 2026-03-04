@@ -8,3 +8,5 @@ spacy==3.8.11
 tqdm==4.67.3
 contractions==0.1.73
 kagglehub
+matplotlib
+seaborn
