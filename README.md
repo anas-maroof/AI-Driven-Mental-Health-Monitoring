@@ -8,7 +8,10 @@ The model learns patterns in text statements and predicts mental health categori
 - Normal
 - Anxiety
 - Suicidal
-
+- Anxiety
+- Bipolar
+- Personality disorder
+  
 The pipeline used in this project:
 
 Text Cleaning → NLP Processing → Feature Extraction → Class Balancing → Model Training
