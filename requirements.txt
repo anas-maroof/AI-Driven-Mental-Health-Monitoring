@@ -10,3 +10,4 @@ contractions==0.1.73
 kagglehub
 matplotlib
 seaborn
+wordcloud
