@@ -137,3 +137,17 @@ python -m ipykernel install --user --name=<envname>
 - Save each word cloud image separately in the **output directory** for further analysis.
 - Handle cases where a class has **empty or insufficient text** to prevent runtime errors.
 
+### N-gram Analysis for Each Sentiment Class
+
+- Perform **N-gram analysis** to identify frequently occurring word patterns within each sentiment class.
+- Create a temporary dataset combining cleaned training text and corresponding labels.
+- Compute **Unigrams, Bigrams, and Trigrams** for each sentiment category.
+- Use **CountVectorizer** to convert text into N-gram frequency features.
+- Apply `min_df = 2` to ignore extremely rare N-grams and focus on meaningful patterns.
+- Limit the vocabulary to **2000 features** to maintain computational efficiency.
+- Extract the **top 10 most frequent N-grams** for each sentiment class.
+- Visualize N-gram frequencies using **Seaborn bar plots**.
+- Automatically adjust plot size for better readability.
+- Save generated N-gram plots in the **output directory** for further analysis.
+- Include error handling for cases where a class has **insufficient text or valid N-grams**.
+
