@@ -190,3 +190,21 @@ python -m ipykernel install --user --name=<envname>
 - Achieved **69% test accuracy** on the SMOTE-balanced training setup.
 - Generate and visualize a **Confusion Matrix** to analyze class-wise prediction performance.
 
+### Logistic Regression with Cost-Sensitive Learning
+
+- Implement **Logistic Regression with Cost-Sensitive Learning** to handle class imbalance without oversampling.
+- Convert cleaned text into numerical features using **TF-IDF vectorization**.
+- Configure TF-IDF with **5000 maximum features**, **minimum document frequency of 3**, and **(1,2) n-gram range** to capture both unigrams and bigrams.
+- Fit the TF-IDF vectorizer on the **training dataset** and transform both training and test datasets.
+- Compute **class weights automatically using `compute_class_weight`** to penalize misclassification of minority classes.
+- Create a **class weight dictionary** and pass it to the Logistic Regression model to implement cost-sensitive learning.
+- Perform **hyperparameter tuning using GridSearchCV** to select the best regularization strength.
+- Evaluate values of **C = [0.1, 1, 10]** with **L2 regularization** and **liblinear solver**.
+- Use **K-Fold Cross Validation** with shuffled splits and a fixed random seed for reproducibility.
+- Optimize model selection using **weighted F1-score**, which is suitable for imbalanced multi-class classification.
+- Include a **fallback model training step** if GridSearchCV fails or there are insufficient samples.
+- Train the final model on the **TF-IDF training dataset with computed class weights**.
+- Evaluate the model on the **test dataset** using **precision, recall, F1-score, and accuracy**.
+- Generate and visualize a **Confusion Matrix** to analyze class-wise prediction performance.
+- Save the confusion matrix plot in the **output directory** for reporting and analysis.
+
