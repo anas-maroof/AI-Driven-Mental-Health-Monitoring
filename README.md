@@ -170,3 +170,23 @@ python -m ipykernel install --user --name=<envname>
 - Generate and visualize a **Confusion Matrix** to analyze prediction performance across all sentiment classes.
 - Save the confusion matrix visualization in the **output directory** for reporting and analysis.
 
+### Logistic Regression with SMOTE Dataset
+
+- Train **Logistic Regression** on the **SMOTE-balanced dataset** to address class imbalance.
+- Use the **TF-IDF feature vectors generated earlier** from the text preprocessing pipeline.
+- Training dataset contains **84,987 samples**, while the test dataset contains **8,958 samples**.
+- Perform **hyperparameter tuning using GridSearchCV** to identify the optimal model configuration.
+- Evaluate different values of **regularization strength (C = 0.1, 1, 10)** with **L2 regularization**.
+- Use **`liblinear` solver** suitable for smaller and sparse datasets such as TF-IDF matrices.
+- Apply **K-Fold Cross Validation (3 splits)** with shuffling and a fixed random seed for reproducibility.
+- Optimize model selection using **weighted F1-score**, which accounts for class imbalance across categories.
+- Best model configuration obtained:
+  - **C = 10**
+  - **Penalty = L2**
+  - **Solver = liblinear**
+- Achieved **best cross-validation weighted F1-score of 0.865** on the training data.
+- Evaluate the trained model on the **held-out test dataset**.
+- Report performance metrics including **precision, recall, F1-score, and overall accuracy**.
+- Achieved **69% test accuracy** on the SMOTE-balanced training setup.
+- Generate and visualize a **Confusion Matrix** to analyze class-wise prediction performance.
+
