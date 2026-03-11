@@ -151,5 +151,22 @@ python -m ipykernel install --user --name=<envname>
 - Save generated N-gram plots in the **output directory** for further analysis.
 - Include error handling for cases where a class has **insufficient text or valid N-grams**.
 
+### Baseline Model: Logistic Regression
 
+- Implement **Logistic Regression** as the baseline model for multi-class mental health text classification.
+- Convert cleaned text data into numerical features using **TF-IDF vectorization**.
+- Configure TF-IDF with **5000 maximum features**, **minimum document frequency of 3**, and **(1,2) n-gram range** to capture both unigrams and bigrams.
+- Fit the TF-IDF vectorizer on the **training dataset** and transform both training and test datasets.
+- Perform **hyperparameter tuning using GridSearchCV** with different solvers (`liblinear`, `saga`), penalties (`l1`, `l2`), regularization strengths (`C`), and optional class balancing.
+- Use **K-Fold Cross Validation** with shuffled splits and a fixed random seed for reproducibility.
+- Optimize model performance using **weighted F1-score**, suitable for multi-class and imbalanced datasets.
+- Include **fallback training with a default Logistic Regression model** if GridSearchCV fails.
+- Train the final model using the processed TF-IDF training data.
+- Evaluate model performance on the **test dataset** using:
+  - Precision
+  - Recall
+  - F1-score
+  - Accuracy
+- Generate and visualize a **Confusion Matrix** to analyze prediction performance across all sentiment classes.
+- Save the confusion matrix visualization in the **output directory** for reporting and analysis.
 
