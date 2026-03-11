@@ -125,3 +125,15 @@ python -m ipykernel install --user --name=<envname>
 * Keep test data unchanged to ensure fair model evaluation
 * Store resampled training data and original test data separately for further modeling
 
+### Word Cloud Visualization for Each Sentiment Class
+
+- Generate **Word Clouds** to visualize the most frequent words for each sentiment class.
+- Combine all cleaned training texts belonging to the same label.
+- Iterate through each sentiment category using the `label_id` mapping.
+- Create word clouds using the **WordCloud** library with a **white background** and **viridis colormap**.
+- Disable **collocations** to highlight individual word frequencies clearly.
+- Use already **preprocessed text** (stopwords removed during cleaning).
+- Display generated word clouds using **Matplotlib**.
+- Save each word cloud image separately in the **output directory** for further analysis.
+- Handle cases where a class has **empty or insufficient text** to prevent runtime errors.
+
