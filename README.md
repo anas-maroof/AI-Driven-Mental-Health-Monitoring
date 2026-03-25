@@ -208,3 +208,28 @@ python -m ipykernel install --user --name=<envname>
 - Generate and visualize a **Confusion Matrix** to analyze class-wise prediction performance.
 - Save the confusion matrix plot in the **output directory** for reporting and analysis.
 
+
+### Deep Learning Model: RoBERTa (Robust Transformers)
+
+- Uses **roberta-base** for multi-class mental-health sentiment classification.
+- Includes seed/device setup and environment checks before training.
+- Performs tokenization with **RobertaTokenizerFast** using padding/truncation.
+- Builds PyTorch **Dataset/DataLoader** pipelines for train/validation/test splits.
+- Trains with **class-weighted loss + AdamW + warmup scheduler + gradient clipping**.
+- Uses validation-based **early stopping** and saves the best checkpoint.
+- Reports test **accuracy, classification report, and confusion matrix**.
+- Reloads the **best saved model checkpoint** before final test evaluation.
+- Uses stable batch-wise training and validation loops with per-epoch metric tracking.
+
+### BERT-Fuse Hybrid Model
+
+- Uses **bert-base-uncased** as the contextual encoder branch.
+- Generates handcrafted features using **Bag-of-Words** and **TF-IDF**.
+- Prepares tokenized + handcrafted inputs in a custom hybrid dataset pipeline.
+- Uses a fused architecture: **Bi-LSTM + Bi-GRU + Transformer block + CNN**.
+- Concatenates fused deep features with handcrafted vectors before classification.
+- Trains with **AdamW**, scheduler, and monitored validation performance.
+- Evaluates with **accuracy, classification report, and confusion matrix**.
+- Includes reproducibility controls (fixed seeds and deterministic settings where applicable).
+- Runs full train/validation/test workflow with checkpoint-based best-model selection.
+
