@@ -2,4 +2,4 @@ myenv2/
 *.pt
 *.safetensors
 roberta_best_model/
-roberta_base_best_model_reg/
+roberta-base_best_model_reg/
