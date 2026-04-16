@@ -57,18 +57,8 @@ label_map = {
     5: "Bipolar",
     6: "Personality Disorder"
 }
-
-# =======================
-# RULE-BASED KEYWORDS
-# =======================
 keyword_map = {
-    "Suicidal": ["suicide", "kill myself", "end my life", "self harm"],
-    "Depression": ["depressed", "sad", "hopeless", "worthless", "empty"],
-    "Anxiety": ["anxiety", "anxious", "panic", "nervous", "overthinking", "scared"],
-    # "Stress": [],
-    # "Bipolar": ["bipolar", "mood swings", "manic"],
-    # "Personality Disorder": ["personality disorder", "unstable personality"],
-    # "Normal": []
+    
 }
 
 # =======================
@@ -92,9 +82,6 @@ def load_model():
 
 tokenizer, model = load_model()
 
-# =======================
-# RULE-BASED PREDICTION
-# =======================
 def rule_based_prediction(text):
     text = text.lower()
 
@@ -129,9 +116,6 @@ def show_support(predicted_label):
         Seeking help is a sign of strength, not weakness.
         """)
 
-# =======================
-# MODEL PREDICTION
-# =======================
 def predict(text):
     inputs = tokenizer(
         text,
