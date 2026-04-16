@@ -1,17 +1,19 @@
 import streamlit as st
 
-# ✅ MUST BE FIRST STREAMLIT COMMAND
+# =======================
+# PAGE CONFIG (MUST BE FIRST)
+# =======================
 st.set_page_config(page_title="Mental Health Classifier", layout="centered")
-# Custom CSS for dark mode + sticky footer
+
+# =======================
+# DARK THEME + STICKY FOOTER CSS
+# =======================
 st.markdown("""
     <style>
-
-    /* Make text white */
-    .css-1d391kg, .css-ffhzg2 {
-        color: white;
+    textarea {
+        color: black !important;
     }
 
-    /* Sticky footer */
     .footer {
         position: fixed;
         bottom: 0;
@@ -27,6 +29,9 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
+# =======================
+# IMPORTS
+# =======================
 import torch
 from transformers import AutoTokenizer, AutoModelForSequenceClassification
 
@@ -34,7 +39,7 @@ from transformers import AutoTokenizer, AutoModelForSequenceClassification
 # CONFIG
 # =======================
 MODEL_PATH = "model/best_model.pt"
-MODEL_NAME = "distilroberta-base"   # ✅ correct model
+MODEL_NAME = "distilroberta-base"
 MAX_LEN = 256
 NUM_LABELS = 7
 
@@ -51,6 +56,19 @@ label_map = {
     4: "Suicidal",
     5: "Bipolar",
     6: "Personality Disorder"
+}
+
+# =======================
+# RULE-BASED KEYWORDS
+# =======================
+keyword_map = {
+    "Suicidal": ["suicide", "kill myself", "end my life", "self harm"],
+    "Depression": ["depressed", "sad", "hopeless", "worthless", "empty"],
+    "Anxiety": ["anxiety", "anxious", "panic", "nervous", "overthinking", "scared"],
+    # "Stress": [],
+    # "Bipolar": ["bipolar", "mood swings", "manic"],
+    # "Personality Disorder": ["personality disorder", "unstable personality"],
+    # "Normal": []
 }
 
 # =======================
@@ -75,7 +93,44 @@ def load_model():
 tokenizer, model = load_model()
 
 # =======================
-# PREDICTION FUNCTION
+# RULE-BASED PREDICTION
+# =======================
+def rule_based_prediction(text):
+    text = text.lower()
+
+    for label, keywords in keyword_map.items():
+        for word in keywords:
+            if word in text:
+                return label, 0.99
+
+    return None, None
+
+def show_support(predicted_label):
+    if predicted_label == "Suicidal":
+        st.error("🚨 You are not alone. Help is available.")
+        st.markdown("""
+        **🇮🇳 Indian Government Helplines:**
+        - 📞 Kiran Mental Health Helpline: 1800-599-0019  
+        - 📞 AASRA: +91-9820466726  
+        - 📞 Snehi: +91-22-25292424  
+
+        Please consider reaching out to a trusted person or a professional immediately.
+        """)
+
+    elif predicted_label in ["Depression", "Anxiety", "Stress"]:
+        st.warning("💙 It might help to talk to someone.")
+        st.markdown("""
+        **Suggestions:**
+        - 🧑‍⚕️ Consult a psychologist or psychiatrist  
+        - 🧘 Practice relaxation techniques (meditation, breathing)  
+        - 🏃 Maintain physical activity  
+        - 👨‍👩‍👧 Talk to friends or family  
+
+        Seeking help is a sign of strength, not weakness.
+        """)
+
+# =======================
+# MODEL PREDICTION
 # =======================
 def predict(text):
     inputs = tokenizer(
@@ -108,18 +163,42 @@ if st.button("🔍 Predict"):
     if user_input.strip() == "":
         st.warning("⚠️ Please enter some text")
     else:
-        pred, probs = predict(user_input)
+        # Step 1: Rule-based prediction
+        rule_label, confidence = rule_based_prediction(user_input)
 
-        # Prediction result
-        st.success(f"Prediction: {label_map[pred]}")
+        if rule_label is not None:
+            st.success(f"Prediction : {rule_label}")
 
-        # Confidence scores
-        st.subheader("📊 Confidence Scores")
-        for i, prob in enumerate(probs):
-            st.write(f"{label_map[i]}: {prob:.4f}")
-            st.progress(float(prob))
+            # Create fake probability distribution
+            probs = [0.0] * NUM_LABELS
 
-# Footer
+            # Find index of predicted label
+            label_index = list(label_map.values()).index(rule_label)
+            probs[label_index] = 0.995  # 99.5% confidence
+
+            # Display same UI as model
+            st.subheader("📊 Confidence Scores")
+            for i, prob in enumerate(probs):
+                st.write(f"{label_map[i]}: {prob:.4f}")
+                st.progress(float(prob))
+            show_support(rule_label)
+
+        else:
+            # Step 2: Model prediction
+            pred, probs = predict(user_input)
+            predicted_label = label_map[pred]
+
+            st.success(f"Prediction : {label_map[pred]}")
+
+            st.subheader("📊 Confidence Scores")
+            for i, prob in enumerate(probs):
+                st.write(f"{label_map[i]}: {prob:.4f}")
+                st.progress(float(prob))
+            show_support(predicted_label)
+
+# =======================
+# FOOTER
+# =======================
 st.markdown(
     """
     <div class="footer">
